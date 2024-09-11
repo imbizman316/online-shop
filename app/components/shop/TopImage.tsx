@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import { IoIosArrowDown } from "react-icons/io";
+import ProductsA from "./ProductsA";
 
-function TopImage() {
+function TopImage({ scrollToSection }) {
   return (
     <div
       className="flex justify-center items-center relative"
@@ -26,7 +29,8 @@ function TopImage() {
       </div>
       <IoIosArrowDown
         color="white"
-        className="absolute z-20 bottom-0 mb-5 text-[40px] hover:text-[50px] duration-200"
+        className="absolute z-20 bottom-0 mb-5 text-[40px] hover:text-[50px] duration-200 cursor-pointer"
+        onClick={() => scrollToSection()}
       />
     </div>
   );

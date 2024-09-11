@@ -1,9 +1,11 @@
+"use client";
+
 import React from "react";
 import SubscribeSection from "./footer/SubscribeSection";
 
 function Footer() {
   return (
-    <div className="bg-[#1a2456] min-h-[20em] text-[#efc2b3] text-xs py-10 px-20 flex gap-10 justify-evenly flex-wrap">
+    <div className="bg-[#1a2456] min-h-[400px] text-[#efc2b3] text-xs py-10 px-20 flex gap-10 justify-evenly flex-wrap">
       <div>
         <h1 className="pb-4">MONOGRAM</h1>
         <p>305 King St. W.</p>

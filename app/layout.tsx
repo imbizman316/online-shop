@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { NavigationProvider } from "@/lib/NavigationContext";
+import { QueryProvider } from "@/lib/react-query";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -27,10 +29,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <Navbar />
-        {children}
-        <Footer />
+      <body className="flex flex-col min-h-screen">
+        <QueryProvider>
+          <NavigationProvider>
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </NavigationProvider>
+        </QueryProvider>
       </body>
     </html>
   );
