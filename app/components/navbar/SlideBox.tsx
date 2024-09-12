@@ -1,6 +1,7 @@
 import { useNavigation } from "@/lib/NavigationContext";
 import React from "react";
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import SlideCartItem from "./SlideCartItem";
 
 export const NothingInBag = () => {
   const { toggleMenu } = useNavigation();
@@ -92,7 +93,7 @@ function SlideBox() {
           <h1>CONTINUE SHOPPING</h1>
         </div>
         <div className="px-5">
-          {shoppingCart.length <= 0 && <NothingInBag />}
+          {shoppingCart.length <= 0 ? <NothingInBag /> : <SlideCartItem />}
           <CredCardPart />
         </div>
         <CheckOutButton shoppingCart={shoppingCart} />
