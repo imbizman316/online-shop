@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState } from "react";
 
 function ProductItem({ data, main }) {
@@ -14,10 +15,11 @@ function ProductItem({ data, main }) {
   };
 
   return (
-    <div
-      className={`flex flex-col w-[${main ? "450px" : "300px"}] h-[${
-        main ? "400px" : "300px"
-      }] justify-center items-center`}
+    <Link
+      href={`/shop/products/${data.id}`}
+      className={`cursor-pointer flex flex-col w-[${
+        main ? "450px" : "300px"
+      }] h-[${main ? "400px" : "300px"}] justify-center items-center`}
     >
       <div
         className="duration-200 bg-gray-200"
@@ -44,7 +46,7 @@ function ProductItem({ data, main }) {
           {data.description}
         </div>
       )}
-    </div>
+    </Link>
   );
 }
 
