@@ -13,7 +13,8 @@ function ProductDetailPage({ params }) {
   // Fetch the product by ID
   const { id } = params;
 
-  const { shoppingCart, addToCart, fetchedProductsData } = useNavigation();
+  const { shoppingCart, addToCart, fetchedProductsData, isOpen, toggleMenu } =
+    useNavigation();
 
   const foundData = fetchedProductsData.find(
     (product) => parseInt(product.id) === parseInt(id)
@@ -23,6 +24,11 @@ function ProductDetailPage({ params }) {
 
   const handleCountChange = (e) => {
     setItemCount(e.target.value);
+  };
+
+  const handleAddToBag = () => {
+    addToCart({ ...foundData, count: parseInt(itemCount) });
+    toggleMenu(true);
   };
 
   console.log(foundData);
@@ -97,9 +103,7 @@ function ProductDetailPage({ params }) {
             </select>
             <button
               className="bg-[#1a2456] text-white px-6 text-xs- py-2 rounded-3xl font-bold"
-              onClick={() =>
-                addToCart({ ...foundData, count: parseInt(itemCount) })
-              }
+              onClick={handleAddToBag}
             >
               ADD TO BAG
             </button>

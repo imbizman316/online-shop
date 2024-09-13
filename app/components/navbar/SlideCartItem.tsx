@@ -8,7 +8,7 @@ function SlideCartItem() {
   return (
     <div>
       {shoppingCart.map((item, index) => (
-        <CartItem key={index} item={item} />
+        <CartItem key={index} id={item.id} />
       ))}
     </div>
   );

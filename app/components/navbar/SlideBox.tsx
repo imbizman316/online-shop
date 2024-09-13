@@ -1,5 +1,5 @@
 import { useNavigation } from "@/lib/NavigationContext";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import SlideCartItem from "./SlideCartItem";
 
@@ -48,12 +48,14 @@ export const CredCardPart = () => {
   );
 };
 
-export const CheckOutButton = ({ shoppingCart }) => {
+export const CheckOutButton = () => {
+  const { shoppingCart, subTotal } = useNavigation();
+
   return (
     <div className="bg-[#1a2456] absolute bottom-0 w-full p-5">
       <div className="flex justify-between">
         <h1>SUBTOTAL</h1>
-        <h1>0</h1>
+        <h1>{subTotal}</h1>
       </div>
       <div>
         <button
@@ -96,7 +98,7 @@ function SlideBox() {
           {shoppingCart.length <= 0 ? <NothingInBag /> : <SlideCartItem />}
           <CredCardPart />
         </div>
-        <CheckOutButton shoppingCart={shoppingCart} />
+        <CheckOutButton />
       </div>
       {/* Partial Dark Overlay */}
       {isOpen && (
