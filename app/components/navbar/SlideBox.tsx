@@ -75,9 +75,7 @@ export const CheckOutButton = () => {
 };
 
 function SlideBox() {
-  const { isOpen, toggleMenu } = useNavigation();
-
-  const { shoppingCart } = useNavigation();
+  const { isOpen, toggleMenu, shoppingCart } = useNavigation();
 
   return (
     <div>

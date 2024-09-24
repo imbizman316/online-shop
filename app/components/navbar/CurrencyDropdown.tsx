@@ -13,8 +13,12 @@ function CurrencyDropdown() {
       value={currentCurrency}
       onChange={(e) => handleCurrencyChange(e.target.value)}
     >
-      {currencies.map((currency) => (
-        <option className="bg-white text-black" value={currency.name}>
+      {currencies.map((currency, index) => (
+        <option
+          key={index}
+          className="bg-white text-black"
+          value={currency.name}
+        >
           {currency.name} {currency.symbol}
         </option>
       ))}
