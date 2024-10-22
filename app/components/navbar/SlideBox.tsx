@@ -1,5 +1,5 @@
 import { useNavigation } from "@/lib/NavigationContext";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import SlideCartItem from "./SlideCartItem";
 

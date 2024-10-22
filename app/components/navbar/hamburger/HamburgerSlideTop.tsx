@@ -45,29 +45,14 @@ function HamburgerSlideTop() {
           </div>
         </div>
       </div>
-
-      {/* <div
-        className={`fixed top-0 left-0 h-full w-full bg-black bg-opacity-50 z-30 duration-500`}
-        onClick={toggleHamburgerSlide}
-      ></div> */}
-      {/* Partial Dark Overlay */}
-      {/* {openHamburgerSlide && (
+      {openHamburgerSlide && (
         <div
-          className={`fixed top-0 left-0 h-full w-[calc(100%)] bg-black ${
+          className={`fixed top-0 left-64 h-full w-[calc(100%-16rem)] bg-black ${
             openHamburgerSlide ? "bg-opacity-50" : "bg-opacity-0"
           } z-30 duration-500`}
           onClick={toggleHamburgerSlide}
         ></div>
-      )} */}
-      {/* Partial Dark Overlay */}
-      {/* {openHamburgerSlide && (
-        <div
-          className={`fixed top-0 left-[-320px] h-full w-[calc(100%)] bg-black ${
-            openHamburgerSlide ? "bg-opacity-50" : "bg-opacity-0"
-          } z-30 duration-500`}
-          onClick={toggleHamburgerSlide}
-        ></div>
-      )} */}
+      )}
     </div>
   );
 }

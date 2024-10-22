@@ -65,20 +65,6 @@ function Navbar() {
       {/* Slide-out menu */}
       <SlideBox />
       <HamburgerSlideTop />
-      {/* <div
-        className={`fixed top-0 right-0 h-full w-64 bg-gray-800 text-white transform ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        } transition-transform duration-300 ease-in-out z-40 p-6`}
-      ></div>
-      {/* Partial Dark Overlay */}
-      {/* {isOpen && (
-        <div
-          className={`fixed top-0 right-64 h-full w-[calc(100%-16rem)] bg-black ${
-            isOpen ? "bg-opacity-50" : "bg-opacity-0"
-          } z-30 duration-500`}
-          onClick={toggleMenu}
-        ></div>
-      )}  */}
     </div>
   );
 }

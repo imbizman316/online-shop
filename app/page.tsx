@@ -2,7 +2,6 @@
 
 import { useNavigation } from "@/lib/NavigationContext";
 import BottomSticky from "./components/BottomSticky";
-import Footer from "./components/Footer";
 import MidImage from "./components/shop/MidImage";
 import ProductsA from "./components/shop/ProductsA";
 import TopImage from "./components/shop/TopImage";

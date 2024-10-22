@@ -1,5 +1,6 @@
 "use client";
 
+import currencies from "@/data/currencies";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -23,6 +24,7 @@ type NavigationContextType = {
   handleBottomSticky: () => void;
   confirmCookies: boolean;
   handleConfirmCookies: () => void;
+  currentSymbol: string;
 
   // setFetchedProductsData: (product: any[]) => void;
 };
@@ -43,6 +45,7 @@ export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({
   const [exchangeRate, setExchangeRate] = useState(1);
   const [showBottomSticky, setShowBottomSticky] = useState(false);
   const [confirmCookies, setConfirmCookies] = useState(false);
+  const [currentSymbol, setCurrentSymbol] = useState("$");
 
   const handleConfirmCookies = () => {
     setConfirmCookies(true);
@@ -116,6 +119,12 @@ export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     setSubtotal((prev) => prev / exchangeRate);
+
+    const symbol = currencies.filter(
+      (currency) => currency.name === currentCurrency
+    );
+
+    setCurrentSymbol(symbol[0].symbol);
 
     if (currencyExchangeData?.quotes) {
       const { USDCAD, USDEUR, USDAUD, USDGBP, USDKRW, USDJPY } =
@@ -233,6 +242,7 @@ export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({
         handleBottomSticky,
         confirmCookies,
         handleConfirmCookies,
+        currentSymbol,
       }}
     >
       {children}

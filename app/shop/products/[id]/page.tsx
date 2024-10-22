@@ -3,9 +3,10 @@
 import FullImageModal from "@/app/components/productDetail/FullImageModal";
 import Recommended from "@/app/components/productDetail/Recommended";
 import ReviewContainer from "@/app/components/productDetail/ReviewContainer";
+import currencies from "@/data/currencies";
 import { useNavigation } from "@/lib/NavigationContext";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaRegArrowAltCircleLeft,
   FaRegArrowAltCircleRight,
@@ -15,8 +16,15 @@ function ProductDetailPage({ params }) {
   // Fetch the product by ID
   const { id } = params;
 
-  const { shoppingCart, addToCart, fetchedProductsData, isOpen, toggleMenu } =
-    useNavigation();
+  const {
+    shoppingCart,
+    addToCart,
+    fetchedProductsData,
+    isOpen,
+    toggleMenu,
+    currentCurrency,
+    currentSymbol,
+  } = useNavigation();
 
   const foundData = fetchedProductsData.find(
     (product) => parseInt(product.id) === parseInt(id)
@@ -48,8 +56,6 @@ function ProductDetailPage({ params }) {
       hide: true,
     },
   ];
-
-  console.log(foundData);
 
   const [itemCount, setItemCount] = useState(1);
   const [moveImage, setMoveImage] = useState(0);
@@ -94,14 +100,6 @@ function ProductDetailPage({ params }) {
     );
   };
 
-  const handleImageMove = (direction: string) => {
-    if (direction === "right" && moveImage < 600) {
-      setMoveImage((prev) => prev + 200);
-    } else if (direction === "left" && moveImage > 0) {
-      setMoveImage((prev) => prev - 200);
-    }
-  };
-
   const handleCountChange = (e) => {
     setItemCount(e.target.value);
   };
@@ -109,6 +107,30 @@ function ProductDetailPage({ params }) {
   const handleAddToBag = () => {
     addToCart({ ...foundData, count: parseInt(itemCount) });
     toggleMenu(true);
+  };
+
+  const smallImageWidth = 150;
+  const imageGapWidth = 20;
+  const maxSlideWidth =
+    smallImageWidth * images.length + imageGapWidth * (images.length - 1);
+  const moveSpeed = 250;
+
+  const handleImageMove = (direction: string) => {
+    console.log(moveImage);
+    console.log(maxSlideWidth);
+
+    if (direction === "right") {
+      const remainingDistance = maxSlideWidth - moveImage;
+      console.log("remaining", remainingDistance);
+
+      if (remainingDistance > moveSpeed) {
+        setMoveImage((prev) => prev + moveSpeed);
+      } else {
+        setMoveImage((prev) => prev + remainingDistance);
+      }
+    } else if (direction === "left" && moveImage > 0) {
+      setMoveImage((prev) => (prev - moveSpeed > 0 ? prev - moveSpeed : 0));
+    }
   };
 
   return (
@@ -129,7 +151,7 @@ function ProductDetailPage({ params }) {
               }}
             />
             <div className="flex flex-row gap-5 overflow-hidden relative">
-              <div className="w-full flex flex-row absolute justify-between px-3 bottom-16 z-[300]">
+              <div className="w-full flex flex-row absolute justify-between px-3 bottom-16 z-[300] h-0 top-[45%]">
                 <FaRegArrowAltCircleLeft
                   onClick={() => handleImageMove("left")}
                   className="cursor-pointer"
@@ -142,9 +164,10 @@ function ProductDetailPage({ params }) {
                 />
               </div>
               <div
-                className={`flex flex-row gap-5 relative duration-300`}
+                className={`flex flex-row relative duration-300`}
                 style={{
-                  right: moveImage,
+                  right: `${moveImage}px`,
+                  gap: `${imageGapWidth}px`,
                 }}
               >
                 {images.map((image, index) => (
@@ -153,8 +176,8 @@ function ProductDetailPage({ params }) {
                     className="bg-[#bdc1bc]"
                     style={{
                       backgroundImage: `url(${image.imageUrl})`,
-                      minWidth: "150px",
-                      minHeight: "150px",
+                      minWidth: `${smallImageWidth}px`,
+                      minHeight: `${smallImageWidth}px`,
                       backgroundSize: "contain",
                       backgroundPosition: "center",
                       backgroundRepeat: "no-repeat",
@@ -168,15 +191,20 @@ function ProductDetailPage({ params }) {
           </div>
           <div className="flex flex-col min-h-full justify-start gap-0">
             <h1 className="text-4xl font-bold uppercase">{foundData?.title}</h1>
-            <div className="flex justify-between">
-              <h1>{foundData.price}</h1>
-              <div className="flex gap-3">
+            <div className="flex justify-between py-6">
+              <h1 className="text-2xl font-semibold text-[#1a2456]">
+                {currentSymbol} {foundData.price}
+              </h1>
+              <div className="flex justify-center items-center gap-3">
                 <h1>{foundData.rating}</h1>
-                <h1>{foundData.reviews.length}</h1>
+                <h1 className="font-semibold text-sm px-4 py-1 bg-pink-200 rounded-xl">
+                  {foundData.reviews.length}
+                </h1>
               </div>
             </div>
-            <div className="w-full flex flex-row justify-between">
+            <div className="w-full flex flex-row gap-10">
               <select
+                className="border-2 border-black px-3 rounded-3xl"
                 name="itemCount"
                 id="itemCount"
                 value={itemCount}
@@ -202,17 +230,18 @@ function ProductDetailPage({ params }) {
             {/* <p className="py-5">{foundData.description}</p> */}
             <div className="pt-10">
               {finalData?.map((item, index) => (
-                <div className="" key={index}>
+                <div
+                  className=""
+                  key={index}
+                  onClick={() => handleShowClick(item.id)}
+                >
                   <div
                     className={`flex justify-between items-center py-2 ${
                       index === 0 ? "border-t-2" : ""
                     } border-black`}
                   >
                     <h1 className="font-bold">{item.title}</h1>
-                    <h1
-                      className="text-4xl font-bold p-0 cursor-pointer"
-                      onClick={() => handleShowClick(item.id)}
-                    >
+                    <h1 className="text-4xl font-bold p-0 cursor-pointer">
                       {item.hide ? "+" : "-"}
                     </h1>
                   </div>
